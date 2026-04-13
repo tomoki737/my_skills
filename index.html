@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>河野智輝 | Web Engineer Portfolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f1117;
+      --bg2: #1a1d2e;
+      --bg3: #252840;
+      --accent: #6c63ff;
+      --accent2: #4ecdc4;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --card: #1e2235;
+      --border: #2d3354;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(15,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(108,99,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 700px; }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.25rem 1rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-name span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #8b81ff);
+      color: #fff;
+      border: none;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ===== SECTION ===== */
+    section { padding: 100px 2rem; }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+
+    /* ===== ABOUT ===== */
+    #about { background: var(--bg2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .about-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .meta-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+    }
+
+    .meta-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .meta-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    /* ===== SKILLS ===== */
+    #skills { background: var(--bg); }
+
+    .skills-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .skills-group:last-child { margin-bottom: 0; }
+
+    .skills-group-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.55rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      cursor: default;
+    }
+
+    .skill-item:hover {
+      border-color: var(--accent);
+      background: rgba(108,99,255,0.08);
+      transform: translateY(-2px);
+    }
+
+    .skill-item img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .skill-item .si {
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ===== WORKS ===== */
+    #works { background: var(--bg2); }
+
+    .works-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .work-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .work-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      border-radius: 4px 0 0 4px;
+    }
+
+    .work-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .work-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .work-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .work-period {
+      font-size: 0.8rem;
+      color: var(--accent2);
+      background: rgba(78,205,196,0.1);
+      border: 1px solid rgba(78,205,196,0.2);
+      padding: 0.2rem 0.75rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .work-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .work-points {
+      list-style: none;
+      margin-bottom: 1.25rem;
+    }
+
+    .work-points li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+
+    .work-points li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .work-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .stack-tag {
+      font-size: 0.75rem;
+      background: rgba(45,51,84,0.8);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .work-meta {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .work-meta span { display: flex; align-items: center; gap: 0.3rem; }
+
+    /* ===== CONTACT ===== */
+    #contact { background: var(--bg); text-align: center; }
+
+    .contact-inner { max-width: 560px; margin: 0 auto; }
+
+    .contact-inner p {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; }
+      nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">T.K</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#works">Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-badge">Full Stack Web Engineer</span>
+      <h1 class="hero-name">河野 <span>智輝</span></h1>
+      <p class="hero-sub">Tomoki Kawano</p>
+      <p class="hero-desc">
+        PHP / Go / Vue.js を中心としたフルスタックエンジニア。<br>
+        高トラフィック環境での開発からクラウドインフラまで幅広く対応。
+      </p>
+      <div class="hero-cta">
+        <a href="#works" class="btn btn-primary">実績を見る</a>
+        <a href="#contact" class="btn btn-outline">お問い合わせ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">About</p>
+      <h2 class="section-title">自己紹介</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            PHP（Laravel）および Go を中心としたバックエンド開発を軸に、フロントエンド（Vue.js）まで対応可能なフルスタックエンジニアです。
+          </p>
+          <p>
+            広告配信システムやレタッチシステム開発において、API 設計・DB 設計・基本設計から実装・テストまで一貫して担当いたしました。
+          </p>
+          <p>
+            1 日 100〜200 万リクエスト規模の高トラフィック環境における開発経験を有しており、パフォーマンスチューニングやログ削減などの改善施策を実施してまいりました。
+          </p>
+          <p>
+            GCP（Cloud Run / BigQuery / Redis 等）を活用した開発や、Docker・GitHub Actions による開発基盤整備にも対応しております。設計・レビュー・メンバーサポートなど、チーム開発にも積極的に関わってまいりました。
+          </p>
+        </div>
+        <div class="about-meta">
+          <div class="meta-item">
+            <div class="meta-label">年齢</div>
+            <div class="meta-value">25 歳</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">最終学歴</div>
+            <div class="meta-value">専門学校 卒業</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">勤務可能地域</div>
+            <div class="meta-value">関東（勤務形態・出張等 相談可）</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">稼働開始</div>
+            <div class="meta-value">2026 年 6 月〜</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label">Skills</p>
+      <h2 class="section-title">スキルセット</h2>
+
+      <!-- Language -->
+      <div class="skills-group">
+        <p class="skills-group-title">Language</p>
+        <div class="skill-grid">
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg" alt="PHP">
+            PHP
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" alt="Go">
+            Go
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java">
+            Java
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript">
+            JavaScript
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5">
+            HTML5
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3">
+            CSS3
+          </div>
+        </div>
+      </div>
+
+      <!-- Framework -->
+      <div class="skills-group">
+        <p class="skills-group-title">Framework / Library</p>
+        <div class="skill-grid">
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel">
+            Laravel
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg" alt="Spring Boot">
+            Spring Boot
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/go/go-original-wordmark.svg" alt="Echo">
+            Echo
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" alt="Vue.js">
+            Vue.js
+          </div>
+        </div>
+      </div>
+
+      <!-- Database -->
+      <div class="skills-group">
+        <p class="skills-group-title">Database</p>
+        <div class="skill-grid">
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL">
+            MySQL
+          </div>
+        </div>
+      </div>
+
+      <!-- Cloud / Infra -->
+      <div class="skills-group">
+        <p class="skills-group-title">Cloud / Infra</p>
+        <div class="skill-grid">
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" alt="GCP">
+            GCP
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker">
+            Docker
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" alt="GitHub Actions">
+            GitHub Actions
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/circleci/circleci-plain.svg" alt="CircleCI" style="filter:invert(1)">
+            CircleCI
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="skills-group">
+        <p class="skills-group-title">Tools</p>
+        <div class="skill-grid">
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" style="filter:invert(1)">
+            GitHub
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-original.svg" alt="Swagger">
+            Swagger
+          </div>
+          <div class="skill-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/notion/notion-original.svg" alt="Notion" style="filter:invert(1)">
+            Notion
+          </div>
+          <div class="skill-item">
+            <span class="si">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#4ecdc4"><rect width="24" height="24" rx="4" fill="#1a1d2e"/><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="bold" fill="#4ecdc4">BL</text></svg>
+            </span>
+            Backlog
+          </div>
+          <div class="skill-item">
+            <span class="si">
+              <svg width="18" height="18" viewBox="0 0 24 24"><rect width="24" height="24" rx="4" fill="#1a1d2e"/><text x="12" y="16" text-anchor="middle" font-size="8" font-weight="bold" fill="#94a3b8">MK</text></svg>
+            </span>
+            Mackerel
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section id="works">
+    <div class="container">
+      <p class="section-label">Works</p>
+      <h2 class="section-title">開発実績</h2>
+      <div class="works-list">
+
+        <!-- Project 1 -->
+        <div class="work-card">
+          <div class="work-header">
+            <h3 class="work-title">レタッチシステム・社内ツール開発</h3>
+            <span class="work-period">2024/07 — 2026/05</span>
+          </div>
+          <p class="work-desc">
+            レタッチアプリ・ポータルサイト・社内ツールの開発。フルスタックエンジニアとして要件整理からリリースまで一貫担当。
+          </p>
+          <ul class="work-points">
+            <li>ポータルサイト開発・既存機能のリファクタリング・新規機能追加</li>
+            <li>Swagger / Notion を用いた API 設計・テーブル設計・画面一覧設計</li>
+            <li>Linter 導入による開発効率向上、コードレビュー対応</li>
+            <li>新規参画メンバーへの環境構築サポート・手順説明</li>
+            <li>フロントエンド（Vue.js）/ バックエンド（Laravel 11）双方の実装</li>
+          </ul>
+          <div class="work-stack">
+            <span class="stack-tag">PHP</span>
+            <span class="stack-tag">Java 17</span>
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">TypeScript</span>
+            <span class="stack-tag">Laravel 11</span>
+            <span class="stack-tag">Spring Boot</span>
+            <span class="stack-tag">Vue.js</span>
+            <span class="stack-tag">MySQL</span>
+            <span class="stack-tag">GCP</span>
+            <span class="stack-tag">Docker</span>
+            <span class="stack-tag">GitHub Actions</span>
+          </div>
+          <div class="work-meta">
+            <span>期間：1 年 11 ヶ月</span>
+            <span>規模：6〜10 名</span>
+            <span>役割：メンバー</span>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="work-card">
+          <div class="work-header">
+            <h3 class="work-title">広告配信システム開発</h3>
+            <span class="work-period">2023/04 — 2024/07</span>
+          </div>
+          <p class="work-desc">
+            DSP 立ち上げに伴う SSP 連携機能の開発と広告配信ロジックの改善。1 日 100〜200 万リクエスト規模の高トラフィック環境に対応。
+          </p>
+          <ul class="work-points">
+            <li>DSP-SSP 連携機能の実装・広告配信処理の最適化</li>
+            <li>インプレッション数向上を目的とした配信ロジック改善</li>
+            <li>カテゴリーブロック機能などの開発</li>
+            <li>パフォーマンスチューニング・ログ削減による安定稼働の実現</li>
+            <li>GCP 環境での開発・運用</li>
+          </ul>
+          <div class="work-stack">
+            <span class="stack-tag">Go</span>
+            <span class="stack-tag">PHP</span>
+            <span class="stack-tag">Echo</span>
+            <span class="stack-tag">Laravel</span>
+            <span class="stack-tag">MySQL</span>
+            <span class="stack-tag">GCP</span>
+            <span class="stack-tag">Docker</span>
+            <span class="stack-tag">GitHub Actions</span>
+          </div>
+          <div class="work-meta">
+            <span>期間：1 年 4 ヶ月</span>
+            <span>規模：6〜10 名</span>
+            <span>役割：メンバー</span>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="work-card">
+          <div class="work-header">
+            <h3 class="work-title">ガチャシステム開発</h3>
+            <span class="work-period">2024/01 — 2024/04</span>
+          </div>
+          <p class="work-desc">
+            既存ガチャシステムの刷新プロジェクト。新環境でのシステム再構築および運用基盤の整備を担当。
+          </p>
+          <ul class="work-points">
+            <li>既存システムとの連携機能の実装・新環境上でのシステム再構築</li>
+            <li>Dockerfile / docker-compose / Makefile 整備による開発効率向上</li>
+            <li>デプロイフロー整備・Mackerel を用いた監視環境構築</li>
+            <li>GCP Compute Engine を活用した本番環境構成</li>
+          </ul>
+          <div class="work-stack">
+            <span class="stack-tag">Go</span>
+            <span class="stack-tag">JavaScript</span>
+            <span class="stack-tag">Echo</span>
+            <span class="stack-tag">MySQL</span>
+            <span class="stack-tag">GCP</span>
+            <span class="stack-tag">Docker</span>
+            <span class="stack-tag">Mackerel</span>
+            <span class="stack-tag">CircleCI</span>
+          </div>
+          <div class="work-meta">
+            <span>期間：4 ヶ月</span>
+            <span>規模：1〜5 名</span>
+            <span>役割：メンバー</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <p class="section-label" style="text-align:center;">Contact</p>
+        <h2 class="section-title">お問い合わせ</h2>
+        <p>
+          お仕事のご依頼・ご相談はお気軽にお問い合わせください。
+        </p>
+        <div class="contact-links">
+          <a href="mailto:tomoki.k2159@gmail.com" class="contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+          </a>
+          <a href="https://github.com/tomoki737" target="_blank" class="contact-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 河野智輝 (Tomoki Kawano). All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
